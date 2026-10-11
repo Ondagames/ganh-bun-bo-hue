@@ -3733,7 +3733,7 @@
         representedItems: ["riceNoodle", "porkHock", "crabCake", "porkBlood"]
       }
     };
-    const CUSTOMER_BASE_WAIT_SECONDS = 20;
+    const CUSTOMER_BASE_WAIT_SECONDS = 30;
     const SERVICE_PENALTY_STAR_STEP = 1;
     const SERVICE_PENALTY_STAR_LIMIT = 3;
 
@@ -5925,7 +5925,6 @@
           ? [["Chìa khóa bí ẩn kích hoạt (đã tính vào doanh thu)", "+" + formatMoney(gameState.mysteryKeyReward) + "đ"]] : []),
         ["Khách còn nợ", formatMoney(gameState.customerDebt) + "đ"],
         ["Chi mua nguyên liệu", formatMoney(gameState.dailyExpenses.food) + "đ"],
-        ["Nguyên liệu hết hạn", gameState.dailySpoilage || "Không có"],
         ["Chi nâng cấp", formatMoney(gameState.dailyExpenses.upgrades) + "đ"],
         ["Chi hộp quà", formatMoney(gameState.dailyExpenses.gifts || 0) + "đ"],
         ["Chi kiểm tra vệ sinh", formatMoney(gameState.dailyExpenses.inspection || 0) + "đ"],
@@ -7078,11 +7077,6 @@
       activateRiverTreasureForDay();
       recordStoreOpening();
       trackResourceDay(gameState.day);
-      const requiredStock = new Map();
-      gameState.dailyCustomers.forEach(customer => customer.orders.forEach(order => order.orderItems.forEach(key => {
-        requiredStock.set(key, (requiredStock.get(key) || 0) + 1);
-      })));
-      if ([...requiredStock].some(([key, amount]) => getInventoryAmount(key) < amount)) trackResourceDay(gameState.day, true);
       resetDailyBowl();
       saveGame();
       showDailyGameScreen();
