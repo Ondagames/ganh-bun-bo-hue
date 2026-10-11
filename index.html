@@ -4636,7 +4636,7 @@
           normalizeNumber(value.lifetimeFiveStarReviews, normalizeCustomerReviews(value.customerReviews).filter(review => review.stars === 5 && review.outcome === "served").length)))),
         lifetimeFiveStarReviews: Math.max(0, Math.floor(normalizeNumber(value.lifetimeFiveStarReviews,
           normalizeCustomerReviews(value.customerReviews).filter(review => review.stars === 5).length))),
-        dailyEvent: value.dailyEvent && ["credit", "inspection", "charity", "resourceShortage"].includes(value.dailyEvent.type)
+        dailyEvent: value.dailyEvent && ["credit", "inspection", "charity"].includes(value.dailyEvent.type)
           ? { type: value.dailyEvent.type, name: String(value.dailyEvent.name || "Khách quen"),
             amount: Math.max(0, normalizeNumber(value.dailyEvent.amount, 0)),
             openedAt: Math.max(0, normalizeNumber(value.dailyEvent.openedAt, Date.now())) } : null,
@@ -6325,15 +6325,6 @@
         if (!wasOpen) document.getElementById(enough ? "daily-event-accept" : "daily-event-decline").focus();
         return;
       }
-      if (event.type === "resourceShortage") {
-        document.getElementById("daily-event-title").textContent = "Hết nguyên liệu";
-        document.getElementById("daily-event-text").textContent = "Kho đã hết một nguyên liệu cần thiết. Bạn muốn đóng tiệm sớm để kết thúc ngày hay tiếp tục chơi?";
-        document.getElementById("daily-event-accept").textContent = "Đóng sớm, kết thúc ngày";
-        document.getElementById("daily-event-decline").textContent = "Tiếp tục chơi";
-        document.getElementById("daily-event-decline").disabled = false;
-        if (!wasOpen) document.getElementById("daily-event-accept").focus();
-        return;
-      }
       const credit = event.type === "credit";
       document.getElementById("daily-event-title").textContent = credit ? "Khách quen xin ghi nợ" : "Kiểm tra vệ sinh";
       document.getElementById("daily-event-text").textContent = credit
@@ -6351,19 +6342,6 @@
       const event = gameState.dailyEvent;
       if (!event) return;
       if (event.type === "charity" && accept && !consumeInventoryItems(DAILY_MENU_ITEMS[0].items)) return;
-      if (event.type === "resourceShortage") {
-        if (accept) {
-          gameState.dailyClosed = true;
-          stopDailyCustomerTimer();
-        }
-        gameState.dailyEvent = null;
-        dailyTimerLastTick = performance.now();
-        saveGame();
-        renderAll();
-        showGameToast(accept ? "Đã đóng tiệm sớm. Kết thúc ngày kinh doanh." : "Tiếp tục bán hàng.", 2200);
-        if (!accept) document.getElementById("daily-customer-scene").focus();
-        return;
-      }
       if (event.type === "inspection" && !accept && gameState.money < 200) {
         renderDailyEvent();
         showGameToast("Không đủ 200đ để tiếp tục bán.", 1800);
@@ -6420,11 +6398,6 @@
       const missing = [...required].filter(([key, amount]) => getInventoryAmount(key) < amount);
       if (missing.length > 0) {
         markResourceShortage();
-        if (gameView === "dailyGame" && uiState.scene === SCENES.GAME && !gameState.dailyEvent && !gameState.dailyClosed) {
-          gameState.dailyEvent = { type: "resourceShortage", name: "", amount: 0, openedAt: Date.now() };
-          renderDailyEvent();
-          saveGame();
-        }
         showGameToast("Kho không đủ: " + missing.map(([key]) => getInventoryMeta(key).name).join(", ") + ". Hãy mua thêm ở chợ.", 1800);
         return false;
       }
@@ -7109,11 +7082,7 @@
       gameState.dailyCustomers.forEach(customer => customer.orders.forEach(order => order.orderItems.forEach(key => {
         requiredStock.set(key, (requiredStock.get(key) || 0) + 1);
       })));
-      const hasInitialShortage = [...requiredStock].some(([key, amount]) => getInventoryAmount(key) < amount);
-      if (hasInitialShortage) {
-        trackResourceDay(gameState.day, true);
-        gameState.dailyEvent = { type: "resourceShortage", name: "", amount: 0, openedAt: Date.now() };
-      }
+      if ([...requiredStock].some(([key, amount]) => getInventoryAmount(key) < amount)) trackResourceDay(gameState.day, true);
       resetDailyBowl();
       saveGame();
       showDailyGameScreen();
