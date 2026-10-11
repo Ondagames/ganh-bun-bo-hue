@@ -102,6 +102,18 @@
       pointer-events: none;
     }
 
+    #title-version {
+      position: absolute;
+      right: 3.5%;
+      bottom: 1.2%;
+      z-index: 2;
+      color: rgba(255, 248, 225, .82);
+      font: 700 10px/1 "Baloo 2", sans-serif;
+      letter-spacing: .04em;
+      text-shadow: 0 1px 2px rgba(67, 30, 8, .65);
+      pointer-events: none;
+    }
+
     /* Nút CÀI ĐẶT */
     #btn-settings {
       left: 7%;
@@ -2732,6 +2744,7 @@
 
     <!-- Title Screen -->
     <img id="title-bg" src="title-bg.png" alt="Gánh Bún Bò Huế" />
+    <span id="title-version" aria-label="Phiên bản 0.1">v0.1</span>
 
     <!-- Số ngày chơi (hiển thị trên nút Bắt Đầu) -->
     
@@ -6295,9 +6308,11 @@
     }
 
     function maybeStartDailyEvent(customer, earnings) {
-      if (gameState.dailyEvent || gameState.dailyEventCount >= 1 || Math.random() >= .35) return;
+      if (gameState.dailyEvent || gameState.dailyEventCount >= 1) return;
+      const inspectionDrama = gameState.day > 10 && Math.random() < .02;
+      if (!inspectionDrama && Math.random() >= .35) return;
       gameState.dailyEvent = {
-        type: Math.random() < .5 ? "credit" : "inspection",
+        type: inspectionDrama ? "inspection" : "credit",
         name: customer.name,
         amount: earnings,
         openedAt: Date.now()
