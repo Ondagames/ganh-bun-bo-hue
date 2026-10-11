@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 560" role="img" aria-label="To rong">
+  <defs>
+    <radialGradient id="inside" cx="50%" cy="38%" r="62%">
+      <stop offset="0" stop-color="#fffaf0"/>
+      <stop offset="0.64" stop-color="#f9edd9"/>
+      <stop offset="1" stop-color="#ead7ba"/>
+    </radialGradient>
+    <linearGradient id="rim" x1="0" x2="1">
+      <stop offset="0" stop-color="#164fc4"/>
+      <stop offset="0.5" stop-color="#4d8df7"/>
+      <stop offset="1" stop-color="#164fc4"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#fff9ec"/>
+      <stop offset="0.72" stop-color="#f2dfc2"/>
+      <stop offset="1" stop-color="#d4b48a"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#4b2a12" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M103 205 C115 398 240 492 410 492 C580 492 705 398 717 205 Z" fill="url(#body)"/>
+    <ellipse cx="410" cy="204" rx="314" ry="126" fill="url(#inside)" stroke="url(#rim)" stroke-width="14"/>
+    <ellipse cx="410" cy="204" rx="285" ry="101" fill="none" stroke="#2f6bda" stroke-width="5" opacity=".72"/>
+    <ellipse cx="410" cy="218" rx="210" ry="70" fill="none" stroke="#86acf3" stroke-width="4" opacity=".55"/>
+    <path d="M103 205 C115 398 240 492 410 492 C580 492 705 398 717 205" fill="none" stroke="#1251c7" stroke-width="9"/>
+    <path d="M175 382 C260 438 558 438 645 382" fill="none" stroke="#2f6bda" stroke-width="7" opacity=".72"/>
+    <path d="M296 494 C318 526 502 526 524 494" fill="#e7cba3" stroke="#245fcc" stroke-width="7"/>
+    <g fill="#2f6bda" opacity=".92">
+      <path d="M392 352 c18 -30 50 -30 66 0 c-16 19 -50 19 -66 0z"/>
+      <circle cx="425" cy="365" r="7"/>
+      <path d="M225 300 c22 -30 55 -16 56 15 c-25 15 -48 10 -56 -15z"/>
+      <path d="M535 300 c22 -30 55 -16 56 15 c-25 15 -48 10 -56 -15z"/>
+      <path d="M330 112 c18 -28 45 -24 55 4 c-18 16 -38 15 -55 -4z"/>
+      <path d="M470 112 c18 -28 45 -24 55 4 c-18 16 -38 15 -55 -4z"/>
+      <path d="M166 190 c17 -24 43 -20 50 4 c-15 14 -35 13 -50 -4z"/>
+      <path d="M604 190 c17 -24 43 -20 50 4 c-15 14 -35 13 -50 -4z"/>
+    </g>
+  </g>
+</svg>
