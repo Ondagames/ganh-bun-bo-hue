@@ -537,51 +537,6 @@
       box-shadow: none;
     }
 
-    .storage-qty {
-      position: absolute;
-      z-index: 45;
-      display: none;
-      width: 7.6%;
-      height: 2.2%;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(117, 65, 23, .55);
-      border-radius: 999px;
-      background: rgba(255, 242, 198, .92);
-      color: #6d3517;
-      font-family: "Baloo 2", "Arial Rounded MT Bold", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
-      font-size: clamp(9px, 2.6vw, 13px);
-      font-weight: 800;
-      line-height: 1;
-      text-shadow: 0 1px 0 rgba(255,255,255,.55);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 2px 4px rgba(77, 35, 9, .18);
-      pointer-events: none;
-    }
-
-    #game-screen.storage-view .storage-qty {
-      display: flex;
-    }
-
-    .storage-qty[data-inventory="salt"] { left: 7.4%; top: 29.0%; }
-    .storage-qty[data-inventory="pepper"] { left: 20.1%; top: 29.0%; }
-    .storage-qty[data-inventory="sugar"] { left: 32.8%; top: 29.0%; }
-    .storage-qty[data-inventory="huePaste"] { left: 7.4%; top: 35.9%; }
-    .storage-qty[data-inventory="fishSauce"] { left: 20.1%; top: 35.9%; }
-    .storage-qty[data-inventory="sate"] { left: 32.8%; top: 35.9%; }
-    .storage-qty[data-inventory="rawVegetables"] { left: 7.4%; top: 47.3%; }
-    .storage-qty[data-inventory="lime"] { left: 20.7%; top: 47.3%; }
-    .storage-qty[data-inventory="chili"] { left: 33.5%; top: 47.3%; }
-    .storage-qty[data-inventory="riceNoodle"] { left: 20.4%; top: 59.6%; }
-    .storage-qty[data-inventory="soyMilk"] { left: 7.4%; top: 69.7%; width: 15.0%; }
-    .storage-qty[data-inventory="freshBeef"] { left: 61.6%; top: 37.5%; }
-    .storage-qty[data-inventory="beefTendon"] { left: 82.4%; top: 37.5%; }
-    .storage-qty[data-inventory="brisket"] { left: 61.6%; top: 44.4%; }
-    .storage-qty[data-inventory="beefShank"] { left: 82.4%; top: 44.4%; }
-    .storage-qty[data-inventory="crabCake"] { left: 61.6%; top: 52.5%; }
-    .storage-qty[data-inventory="porkCake"] { left: 82.4%; top: 52.5%; }
-    .storage-qty[data-inventory="porkBlood"] { left: 61.6%; top: 60.6%; }
-    .storage-qty[data-inventory="porkHock"] { left: 82.4%; top: 60.6%; }
-
     .storage-hotspot {
       position: absolute;
       z-index: 46;
@@ -593,6 +548,32 @@
       cursor: pointer;
       pointer-events: auto;
     }
+
+    .storage-hotspot::after {
+      content: attr(data-amount);
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      min-width: 16px;
+      padding: 2px 4px;
+      border: 1px solid rgba(117, 65, 23, .55);
+      border-radius: 999px;
+      background: rgba(255, 242, 198, .94);
+      color: #6d3517;
+      font: 800 clamp(8px, 2.1vw, 11px)/1 "Baloo 2", sans-serif;
+      text-align: center;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, .55);
+      box-shadow: 0 2px 4px rgba(77, 35, 9, .18);
+      pointer-events: none;
+    }
+
+    /* Fine-tune count badges to stay centered on the ingredient artwork. */
+    .storage-hotspot[data-inventory="chili"]::after { right: 8px; }
+    .storage-hotspot[data-inventory="freshBeef"]::after,
+    .storage-hotspot[data-inventory="beefTendon"]::after { top: 16px; }
+    .storage-hotspot[data-inventory="porkBlood"]::after,
+    .storage-hotspot[data-inventory="porkHock"]::after { top: -14px; }
+    .storage-hotspot[data-inventory="soyMilk"]::after { top: -14px; right: 1px; }
 
     #game-screen.storage-view .storage-hotspot {
       display: block;
@@ -1291,6 +1272,19 @@
       outline: 0;
       background: rgba(55, 190, 107, .10);
       box-shadow: inset 0 0 0 3px rgba(55, 190, 107, .78);
+    }
+
+    .daily-ingredient-hotspot.required {
+      outline: 3px solid rgba(255, 211, 72, .96);
+      outline-offset: 2px;
+      background: rgba(255, 211, 72, .14);
+      box-shadow: 0 0 0 2px rgba(139, 73, 24, .42), 0 0 14px rgba(255, 211, 72, .78);
+      animation: daily-required-pulse 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes daily-required-pulse {
+      from { filter: brightness(1); }
+      to { filter: brightness(1.16); }
     }
 
     .daily-ingredient-hotspot:active {
@@ -2817,7 +2811,7 @@
 
     <!-- Title Screen -->
     <img id="title-bg" src="title-bg.png" alt="Gánh Bún Bò Huế" />
-    <span id="title-version" aria-label="Phiên bản 0.2">v0.2</span>
+    <span id="title-version" aria-label="Phiên bản 0.3">v0.3</span>
     <div id="reset-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="reset-confirm-title" aria-describedby="reset-confirm-text">
       <div class="reset-confirm-box">
         <h2 id="reset-confirm-title">Reset game?</h2>
@@ -3965,8 +3959,7 @@
       capacityLevelLabel: document.getElementById("capacity-level-label"),
       signLevelLabel: document.getElementById("sign-level-label"),
       adsLevelLabel: document.getElementById("ads-level-label"),
-      storageQty: [...document.querySelectorAll(".storage-qty")],
-      storageHotspots: [...document.querySelectorAll(".storage-hotspot")],
+    storageHotspots: [...document.querySelectorAll(".storage-hotspot")],
       upgradeHotspots: [...document.querySelectorAll(".upgrade-hotspot")],
       meatShop: document.querySelector(".meat-shop"),
       shopLayers: [...document.querySelectorAll(".shop-layer")],
@@ -4344,6 +4337,14 @@
       return orderItems.map(key => getInventoryMeta(key).name).join(" + ");
     }
 
+    function getCanonicalDailyOrderItems(orderName, fallbackItems = []) {
+      const menuItem = DAILY_MENU_ITEMS.find(item => item.name === orderName);
+      if (!menuItem) return [...new Set(fallbackItems)];
+      const addonKeys = new Set(CUSTOMER_ORDER_ADDONS.map(addon => addon.key));
+      const addons = fallbackItems.filter(key => addonKeys.has(key));
+      return [...new Set([...menuItem.items, ...addons])];
+    }
+
     function getDailyCustomerOrderText(customer) {
       const orderItems = Array.isArray(customer.orderItems) ? customer.orderItems : CUSTOMER_ORDER_BASE;
       const orderName = typeof customer.orderName === "string" && customer.orderName.trim()
@@ -4419,18 +4420,23 @@
         const orderItems = Array.isArray(customer.orderItems)
           ? customer.orderItems.filter(key => getInventoryMeta(key).name !== key)
           : CUSTOMER_ORDER_BASE;
-        const normalizedOrderItems = orderItems.length > 0 ? [...new Set(orderItems)] : CUSTOMER_ORDER_BASE;
+        let normalizedOrderItems = orderItems.length > 0 ? [...new Set(orderItems)] : CUSTOMER_ORDER_BASE;
         let orderName = typeof customer.orderName === "string" && customer.orderName.trim()
           ? customer.orderName.trim()
           : getDailyOrderNameFromItems(normalizedOrderItems);
         // Migrate the retired duplicate without changing saved order ingredients.
         if (orderName === "Bún bò giò") orderName = getDailyOrderNameFromItems(normalizedOrderItems);
+        normalizedOrderItems = getCanonicalDailyOrderItems(orderName, normalizedOrderItems);
         const legacyCount = Math.max(1, Math.min(3, Math.floor(normalizeNumber(customer.bowlCount, 1))));
         const orders = Array.isArray(customer.orders) && customer.orders.length
           ? customer.orders.slice(0, customer.hueTripGuest === true ? 5 : 3).map(order => {
             const items = Array.isArray(order.orderItems) ? order.orderItems.filter(key => getInventoryMeta(key).name !== key) : [];
-            const orderItems = items.length ? [...new Set(items)] : [...normalizedOrderItems];
-            return { orderItems, orderName: getDailyOrderNameFromItems(orderItems) };
+            const savedOrderName = typeof order.orderName === "string" && order.orderName.trim()
+              ? order.orderName.trim() : getDailyOrderNameFromItems(items.length ? items : normalizedOrderItems);
+            const orderName = DAILY_MENU_ITEMS.some(item => item.name === savedOrderName)
+              ? savedOrderName : getDailyOrderNameFromItems(items.length ? items : normalizedOrderItems);
+            const orderItems = getCanonicalDailyOrderItems(orderName, items.length ? items : normalizedOrderItems);
+            return { orderItems, orderName };
           })
           : Array.from({ length: legacyCount }, () => ({ orderName, orderItems: [...normalizedOrderItems] }));
         const servedBowls = Math.max(0, Math.min(orders.length, Math.floor(normalizeNumber(customer.servedBowls, 0))));
@@ -5070,12 +5076,15 @@
       return { name: key, unit: "đơn vị" };
     }
 
-    function renderStorageInventory() {
-      dom.storageQty.forEach(label => {
-        const item = gameState.inventory[label.dataset.inventory];
-        label.textContent = formatInventoryAmount(Math.max(0, normalizeNumber(item && item.amount, 0)));
-      });
-    }
+function renderStorageInventory() {
+  dom.storageHotspots.forEach(button => {
+    const key = button.dataset.inventory;
+    const item = gameState.inventory[key];
+    const amount = formatInventoryAmount(Math.max(0, normalizeNumber(item && item.amount, 0)));
+    button.dataset.amount = amount;
+    button.title = getInventoryMeta(key).name + ": còn " + amount + " phần";
+  });
+}
 
     function renderKitchen() {
       const potItems = Array.isArray(gameState.cookingPot) ? gameState.cookingPot : [];
@@ -5420,9 +5429,14 @@
     function updateDailyIngredientHotspots() {
       if (!dom.dailyIngredientHotspots) return;
       const selected = getSelectedDailyBowlItems();
+      const activeCustomer = Array.isArray(gameState.dailyCustomers)
+        ? gameState.dailyCustomers.find(customer => customer.status === "waiting")
+        : null;
+      const required = new Set(activeCustomer?.orderItems || []);
       dom.dailyIngredientHotspots.forEach(button => {
         const key = button.dataset.dailyIngredient;
         button.classList.toggle("added", selected.includes(key));
+        button.classList.toggle("required", required.has(key));
         const amount = formatInventoryAmount(getInventoryAmount(key));
         button.dataset.amount = amount;
         button.title = getInventoryMeta(key).name + ": còn " + amount + " phần";
@@ -6001,11 +6015,11 @@
         netCash: collected - totalExpenses };
     }
 
-    function checkDailyEnd() {
+    function checkDailyEnd(forceClose = false) {
       if (gameView !== "dailyGame" || uiState.scene !== SCENES.GAME || gameState.dailyEvent || recipeBookOpenedAt !== null) return;
       const customers = gameState.dailyCustomers;
       const exhausted = customers.length > 0 && customers.every(customer => customer.status !== "waiting");
-      if (!gameState.dailyClosed && !exhausted && gameState.dailyElapsedSeconds < getBusinessDuration()) return;
+      if (!forceClose && !gameState.dailyClosed && !exhausted && gameState.dailyElapsedSeconds < getBusinessDuration()) return;
       gameState.dailyClosed = true;
       awardMysteryKey();
       expireInventoryAtDayEnd();
@@ -7523,7 +7537,7 @@
     dom.btnMedalBack.addEventListener("click", showUpgradeScreen);
     dom.btnOpenStoreBack.addEventListener("click", showUpgradeScreen);
     dom.btnOpenStoreNext.addEventListener("click", handleOpenStoreNext);
-    dom.btnDailyGameBack.addEventListener("click", showOpenStoreScreen);
+    dom.btnDailyGameBack.addEventListener("click", () => checkDailyEnd(true));
     dom.btnBuyMeat.addEventListener("pointerdown", handleBuyMeatPress);
     dom.btnBuyMeat.addEventListener("click", handleBuyMeatPress);
     dom.reviewPanel.addEventListener("click", handleReviewPanelClick);
