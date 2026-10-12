@@ -225,6 +225,24 @@
       background:linear-gradient(180deg,#ffc45f 0%,#f28a2c 48%,#de6b1c 100%);
       border-color:#d86a18;
     }
+    #btn-ingredient-hints {
+      display: none;
+      left:81.2%; top:7.45%; width:15.8%; height:3.15%; border-radius:11px;
+      z-index:74;
+      background:linear-gradient(180deg,#55c9e8 0%,#2b9fd0 48%,#1674a8 100%);
+      border:2px solid #176b9a;
+      box-shadow:inset 0 2px 0 rgba(255,255,255,.34), inset 0 -3px 0 rgba(0,58,92,.22), 0 2px 4px rgba(82,42,8,.18);
+      color:#fff8df;
+      font-family:"Arial Rounded MT Bold","Trebuchet MS","Segoe UI",system-ui,sans-serif;
+      font-size:clamp(7px,1.55vw,9px); font-weight:900; line-height:1;
+      white-space:nowrap;
+      text-shadow:0 1px 1px rgba(0,45,72,.35);
+    }
+    #btn-ingredient-hints.hints-off {
+      background:linear-gradient(180deg,#ffc45f 0%,#f28a2c 48%,#de6b1c 100%);
+      border-color:#d86a18;
+    }
+    #game-screen.daily-game-view #btn-ingredient-hints { display: block; }
     #btn-save { left:64.0%; top:78.7%; width:20.5%; height:7.2%; border-radius:18%; }
     #btn-close-settings { left:31.0%; top:88.4%; width:39.5%; height:7.4%; border-radius:35%; }
     #time-value {
@@ -3106,6 +3124,7 @@
       <button id="btn-open-store-back" class="game-hotspot" aria-label="Quay lại nâng cấp cửa hàng"></button>
       <button id="btn-open-store-next" class="game-hotspot" aria-label="Sang ngày tiếp theo"></button>
       <button id="btn-daily-game-back" class="game-hotspot" aria-label="Quay lại mở cửa hàng"></button>
+      <button id="btn-ingredient-hints" class="hotspot" aria-label="Bật tắt đề xuất nguyên liệu" aria-pressed="true">Đề xuất: Bật</button>
       <div id="review-panel" class="review-panel" aria-label="Danh sách đánh giá khách hàng"></div>
       <span id="open-store-day-label" class="open-store-day-label">Ngày 1</span>
       <div id="open-store-price-panel" class="open-store-price-panel" aria-label="Chỉnh giá bán cho khách"></div>
@@ -3900,7 +3919,8 @@
 
     const DEFAULT_SETTINGS_STATE = {
       businessSeconds: 120,   // thời gian 1 ngày
-      soundOn: true
+      soundOn: true,
+      ingredientHintsOn: true
     };
 
     const DEFAULT_UI_STATE = {
@@ -3986,6 +4006,7 @@
       btnSave: document.getElementById("btn-save"),
       settingsArt: document.getElementById("settings-art"),
       btnSound: document.getElementById("btn-sound"),
+      btnIngredientHints: document.getElementById("btn-ingredient-hints"),
       businessHoursBtn: document.getElementById("business-hours-btn"),
       timeValue: document.getElementById("time-value"),
       soundState: document.getElementById("sound-state"),
@@ -4894,7 +4915,8 @@
         businessSeconds: [120, 360, 480].includes(value.businessSeconds)
           ? value.businessSeconds
           : DEFAULT_SETTINGS_STATE.businessSeconds,
-        soundOn: normalizeBoolean(value.soundOn, DEFAULT_SETTINGS_STATE.soundOn)
+        soundOn: normalizeBoolean(value.soundOn, DEFAULT_SETTINGS_STATE.soundOn),
+        ingredientHintsOn: normalizeBoolean(value.ingredientHintsOn, DEFAULT_SETTINGS_STATE.ingredientHintsOn)
       };
     }
 
@@ -5156,6 +5178,9 @@ function renderStorageInventory() {
       dom.soundState.textContent = settingsState.soundOn ? "Bật" : "Tắt";
       dom.settingsArt.classList.toggle("sound-off", !settingsState.soundOn);
       dom.btnSound.setAttribute("aria-pressed", settingsState.soundOn ? "true" : "false");
+      dom.btnIngredientHints.textContent = "Đề xuất: " + (settingsState.ingredientHintsOn ? "Bật" : "Tắt");
+      dom.btnIngredientHints.classList.toggle("hints-off", !settingsState.ingredientHintsOn);
+      dom.btnIngredientHints.setAttribute("aria-pressed", settingsState.ingredientHintsOn ? "true" : "false");
       dom.timeOptions.forEach(option => {
         option.classList.toggle("selected", Number(option.dataset.seconds) === settingsState.businessSeconds);
       });
@@ -5436,7 +5461,7 @@ function renderStorageInventory() {
       dom.dailyIngredientHotspots.forEach(button => {
         const key = button.dataset.dailyIngredient;
         button.classList.toggle("added", selected.includes(key));
-        button.classList.toggle("required", required.has(key));
+        button.classList.toggle("required", settingsState.ingredientHintsOn && required.has(key));
         const amount = formatInventoryAmount(getInventoryAmount(key));
         button.dataset.amount = amount;
         button.title = getInventoryMeta(key).name + ": còn " + amount + " phần";
@@ -6868,6 +6893,14 @@ function renderStorageInventory() {
       showToast(settingsState.soundOn ? "Âm thanh: Bật" : "Âm thanh: Tắt");
     }
 
+    function toggleIngredientHints() {
+      settingsState.ingredientHintsOn = !settingsState.ingredientHintsOn;
+      saveGame();
+      renderSettings();
+      updateDailyIngredientHotspots();
+      showToast(settingsState.ingredientHintsOn ? "Đề xuất nguyên liệu: Bật" : "Đề xuất nguyên liệu: Tắt");
+    }
+
     function saveCurrentDay() {
       if (saveGame()) {
         showToast("Đã sao lưu ngày chơi " + gameState.day + "!", 1300);
@@ -7515,6 +7548,7 @@ function renderStorageInventory() {
     dom.btnGuide.addEventListener("click", openGuide);
     dom.btnCloseGuide.addEventListener("click", closeGuide);
     dom.btnSound.addEventListener("click", toggleSound);
+    dom.btnIngredientHints.addEventListener("click", toggleIngredientHints);
     dom.btnSave.addEventListener("click", saveCurrentDay);
     dom.btnBack.addEventListener("click", showTitleScreen);
     dom.btnGoMarket.addEventListener("click", showMarketScreen);
