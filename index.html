@@ -2531,6 +2531,24 @@
       transform: translateY(-12%) rotate(7deg);
     }
 
+    .quantity-input {
+      border: 0;
+      border-radius: 4px;
+      background: rgba(255, 244, 210, .72);
+      text-align: center;
+      outline: none;
+      pointer-events: auto;
+      user-select: text;
+      cursor: text;
+      appearance: textfield;
+    }
+    .quantity-input:focus {
+      background: rgba(255, 255, 236, .96);
+      box-shadow: 0 0 0 2px rgba(240, 173, 55, .8);
+    }
+    .quantity-input::-webkit-inner-spin-button,
+    .quantity-input::-webkit-outer-spin-button { appearance: none; margin: 0; }
+
     .meat-total {
       position: absolute;
       z-index: 3;
@@ -2592,6 +2610,14 @@
     .meat-shop [data-item="porkCake"][data-action="plus"] { left: 86.6%; top: 83.61%; }
     .meat-shop [data-item="porkCake"].meat-qty { left: 79.4%; top: 83.85%; }
     .meat-shop .meat-qty { transform: translateY(-3%); }
+
+    /* Keep typed quantity fields compact and centered on the original number area. */
+    .meat-qty.quantity-input {
+      transform: translateY(-18%) scale(.82) !important;
+    }
+    .shop-qty.quantity-input {
+      transform: translateY(0%) scale(.82) !important;
+    }
 
     .meat-product[data-item="freshBeef"] { left: 6.7%; top: 62.9%; width: 22.0%; height: 9.2%; }
     .meat-product[data-item="beefTendon"] { left: 29.0%; top: 62.9%; width: 22.0%; height: 9.2%; }
@@ -3243,28 +3269,28 @@
         <button class="meat-product" data-item="crabCake" aria-label="Xem giá chả cua"></button>
         <button class="meat-product" data-item="porkCake" aria-label="Xem giá chả heo"></button>
         <button class="meat-control" data-item="freshBeef" data-action="minus" aria-label="Giảm thịt bò tươi"></button>
-        <span class="meat-qty" data-item="freshBeef">0</span>
+        <input class="meat-qty quantity-input" data-item="freshBeef" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng thịt bò tươi">
         <button class="meat-control" data-item="freshBeef" data-action="plus" aria-label="Tăng thịt bò tươi"></button>
         <button class="meat-control" data-item="beefTendon" data-action="minus" aria-label="Giảm thịt bò gân"></button>
-        <span class="meat-qty" data-item="beefTendon">0</span>
+        <input class="meat-qty quantity-input" data-item="beefTendon" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng thịt bò gân">
         <button class="meat-control" data-item="beefTendon" data-action="plus" aria-label="Tăng thịt bò gân"></button>
         <button class="meat-control" data-item="brisket" data-action="minus" aria-label="Giảm nạm bò"></button>
-        <span class="meat-qty" data-item="brisket">0</span>
+        <input class="meat-qty quantity-input" data-item="brisket" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng nạm bò">
         <button class="meat-control" data-item="brisket" data-action="plus" aria-label="Tăng nạm bò"></button>
         <button class="meat-control" data-item="beefShank" data-action="minus" aria-label="Giảm bắp bò"></button>
-        <span class="meat-qty" data-item="beefShank">0</span>
+        <input class="meat-qty quantity-input" data-item="beefShank" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng bắp bò">
         <button class="meat-control" data-item="beefShank" data-action="plus" aria-label="Tăng bắp bò"></button>
         <button class="meat-control" data-item="porkHock" data-action="minus" aria-label="Giảm khoanh giò heo"></button>
-        <span class="meat-qty" data-item="porkHock">0</span>
+        <input class="meat-qty quantity-input" data-item="porkHock" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng khoanh giò heo">
         <button class="meat-control" data-item="porkHock" data-action="plus" aria-label="Tăng khoanh giò heo"></button>
         <button class="meat-control" data-item="porkBlood" data-action="minus" aria-label="Giảm huyết heo"></button>
-        <span class="meat-qty" data-item="porkBlood">0</span>
+        <input class="meat-qty quantity-input" data-item="porkBlood" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng huyết heo">
         <button class="meat-control" data-item="porkBlood" data-action="plus" aria-label="Tăng huyết heo"></button>
         <button class="meat-control" data-item="crabCake" data-action="minus" aria-label="Giảm chả cua"></button>
-        <span class="meat-qty" data-item="crabCake">0</span>
+        <input class="meat-qty quantity-input" data-item="crabCake" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng chả cua">
         <button class="meat-control" data-item="crabCake" data-action="plus" aria-label="Tăng chả cua"></button>
         <button class="meat-control" data-item="porkCake" data-action="minus" aria-label="Giảm chả heo"></button>
-        <span class="meat-qty" data-item="porkCake">0</span>
+        <input class="meat-qty quantity-input" data-item="porkCake" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng chả heo">
         <button class="meat-control" data-item="porkCake" data-action="plus" aria-label="Tăng chả heo"></button>
         <span class="meat-total" id="meat-total">0</span>
         <button id="btn-buy-meat" aria-label="Mua hàng thịt"></button>
@@ -3273,10 +3299,10 @@
         <button class="meat-product" data-shop="noodle" data-item="riceNoodle" aria-label="Xem giá sợi bún"></button>
         <button class="meat-product" data-shop="noodle" data-item="soyMilk" aria-label="Xem giá sữa đậu nành"></button>
         <button class="shop-control" data-shop="noodle" data-item="riceNoodle" data-action="minus" aria-label="Giảm sợi bún"></button>
-        <span class="shop-qty" data-shop="noodle" data-item="riceNoodle">0</span>
+        <input class="shop-qty quantity-input" data-shop="noodle" data-item="riceNoodle" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng sợi bún">
         <button class="shop-control" data-shop="noodle" data-item="riceNoodle" data-action="plus" aria-label="Tăng sợi bún"></button>
         <button class="shop-control" data-shop="noodle" data-item="soyMilk" data-action="minus" aria-label="Giảm sữa đậu nành"></button>
-        <span class="shop-qty" data-shop="noodle" data-item="soyMilk">0</span>
+        <input class="shop-qty quantity-input" data-shop="noodle" data-item="soyMilk" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng sữa đậu nành">
         <button class="shop-control" data-shop="noodle" data-item="soyMilk" data-action="plus" aria-label="Tăng sữa đậu nành"></button>
         <span class="shop-total" data-shop-total="noodle">0</span>
         <button class="shop-buy" data-shop-buy="noodle" aria-label="Mua hàng bún"></button>
@@ -3289,22 +3315,22 @@
         <button class="meat-product" data-shop="spice" data-item="huePaste" aria-label="Xem giá ruốc Huế"></button>
         <button class="meat-product" data-shop="spice" data-item="sate" aria-label="Xem giá sa tế"></button>
         <button class="shop-control" data-shop="spice" data-item="salt" data-action="minus" aria-label="Giảm muối"></button>
-        <span class="shop-qty" data-shop="spice" data-item="salt">0</span>
+        <input class="shop-qty quantity-input" data-shop="spice" data-item="salt" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng muối">
         <button class="shop-control" data-shop="spice" data-item="salt" data-action="plus" aria-label="Tăng muối"></button>
         <button class="shop-control" data-shop="spice" data-item="sugar" data-action="minus" aria-label="Giảm bột ngọt"></button>
-        <span class="shop-qty" data-shop="spice" data-item="sugar">0</span>
+        <input class="shop-qty quantity-input" data-shop="spice" data-item="sugar" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng bột ngọt">
         <button class="shop-control" data-shop="spice" data-item="sugar" data-action="plus" aria-label="Tăng bột ngọt"></button>
         <button class="shop-control" data-shop="spice" data-item="pepper" data-action="minus" aria-label="Giảm tiêu"></button>
-        <span class="shop-qty" data-shop="spice" data-item="pepper">0</span>
+        <input class="shop-qty quantity-input" data-shop="spice" data-item="pepper" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng tiêu">
         <button class="shop-control" data-shop="spice" data-item="pepper" data-action="plus" aria-label="Tăng tiêu"></button>
         <button class="shop-control" data-shop="spice" data-item="fishSauce" data-action="minus" aria-label="Giảm nước mắm"></button>
-        <span class="shop-qty" data-shop="spice" data-item="fishSauce">0</span>
+        <input class="shop-qty quantity-input" data-shop="spice" data-item="fishSauce" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng nước mắm">
         <button class="shop-control" data-shop="spice" data-item="fishSauce" data-action="plus" aria-label="Tăng nước mắm"></button>
         <button class="shop-control" data-shop="spice" data-item="huePaste" data-action="minus" aria-label="Giảm ruốc Huế"></button>
-        <span class="shop-qty" data-shop="spice" data-item="huePaste">0</span>
+        <input class="shop-qty quantity-input" data-shop="spice" data-item="huePaste" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng ruốc Huế">
         <button class="shop-control" data-shop="spice" data-item="huePaste" data-action="plus" aria-label="Tăng ruốc Huế"></button>
         <button class="shop-control" data-shop="spice" data-item="sate" data-action="minus" aria-label="Giảm sa tế"></button>
-        <span class="shop-qty" data-shop="spice" data-item="sate">0</span>
+        <input class="shop-qty quantity-input" data-shop="spice" data-item="sate" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng sa tế">
         <button class="shop-control" data-shop="spice" data-item="sate" data-action="plus" aria-label="Tăng sa tế"></button>
         <span class="shop-total" data-shop-total="spice">0</span>
         <button class="shop-buy" data-shop-buy="spice" aria-label="Mua hàng gia vị"></button>
@@ -3314,13 +3340,13 @@
         <button class="meat-product" data-shop="vegetable" data-item="lime" aria-label="Xem giá chanh"></button>
         <button class="meat-product" data-shop="vegetable" data-item="chili" aria-label="Xem giá ớt trái"></button>
         <button class="shop-control" data-shop="vegetable" data-item="rawVegetables" data-action="minus" aria-label="Giảm rau sống"></button>
-        <span class="shop-qty" data-shop="vegetable" data-item="rawVegetables">0</span>
+        <input class="shop-qty quantity-input" data-shop="vegetable" data-item="rawVegetables" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng rau sống">
         <button class="shop-control" data-shop="vegetable" data-item="rawVegetables" data-action="plus" aria-label="Tăng rau sống"></button>
         <button class="shop-control" data-shop="vegetable" data-item="lime" data-action="minus" aria-label="Giảm chanh"></button>
-        <span class="shop-qty" data-shop="vegetable" data-item="lime">0</span>
+        <input class="shop-qty quantity-input" data-shop="vegetable" data-item="lime" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng chanh">
         <button class="shop-control" data-shop="vegetable" data-item="lime" data-action="plus" aria-label="Tăng chanh"></button>
         <button class="shop-control" data-shop="vegetable" data-item="chili" data-action="minus" aria-label="Giảm ớt trái"></button>
-        <span class="shop-qty" data-shop="vegetable" data-item="chili">0</span>
+        <input class="shop-qty quantity-input" data-shop="vegetable" data-item="chili" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Số lượng ớt trái">
         <button class="shop-control" data-shop="vegetable" data-item="chili" data-action="plus" aria-label="Tăng ớt trái"></button>
         <span class="shop-total" data-shop-total="vegetable">0</span>
         <button class="shop-buy" data-shop-buy="vegetable" aria-label="Mua hàng rau"></button>
@@ -3984,6 +4010,7 @@
       meatShop: document.querySelector(".meat-shop"),
       shopLayers: [...document.querySelectorAll(".shop-layer")],
       shopQty: [...document.querySelectorAll(".shop-qty")],
+      quantityInputs: [...document.querySelectorAll(".quantity-input")],
       shopTotals: [...document.querySelectorAll(".shop-total")],
       shopControls: [...document.querySelectorAll(".shop-control")],
       shopBuyButtons: [...document.querySelectorAll(".shop-buy")],
@@ -5063,14 +5090,14 @@
 
     function renderMeatShop() {
       dom.meatQty.forEach(label => {
-        label.textContent = meatCart[label.dataset.item] || 0;
+        label.value = meatCart[label.dataset.item] || 0;
       });
       dom.meatTotal.textContent = formatMoney(getMeatCartTotal());
     }
 
     function renderMarketShops() {
       dom.shopQty.forEach(label => {
-        label.textContent = shopCarts[label.dataset.shop][label.dataset.item] || 0;
+        label.value = shopCarts[label.dataset.shop][label.dataset.item] || 0;
       });
       dom.shopTotals.forEach(label => {
         label.textContent = formatMoney(getShopCartTotal(label.dataset.shopTotal));
@@ -6935,6 +6962,21 @@ function renderStorageInventory() {
       renderMarketShops();
     }
 
+    function commitQuantityInput(input) {
+      const value = Math.max(0, Math.floor(Number(input.value) || 0));
+      input.value = value;
+      if (input.dataset.item && input.dataset.shop) {
+        if (!SHOP_ITEMS[input.dataset.shop]?.[input.dataset.item]) return;
+        shopCarts[input.dataset.shop][input.dataset.item] = value;
+        renderMarketShops();
+        return;
+      }
+      if (input.dataset.item && MEAT_ITEMS[input.dataset.item]) {
+        meatCart[input.dataset.item] = value;
+        renderMeatShop();
+      }
+    }
+
     function showMeatPrice(key) {
       const item = MEAT_ITEMS[key];
       if (!item) return;
@@ -7590,6 +7632,21 @@ function renderStorageInventory() {
     dom.shopBuyButtons.forEach(button => {
       button.addEventListener("pointerdown", (e) => handleShopBuyPress(e, button));
       button.addEventListener("click", (e) => handleShopBuyPress(e, button));
+    });
+
+    dom.quantityInputs.forEach(input => {
+      ["pointerdown", "click"].forEach(eventName => {
+        input.addEventListener(eventName, event => event.stopPropagation());
+      });
+      ["change", "blur"].forEach(eventName => {
+        input.addEventListener(eventName, () => commitQuantityInput(input));
+      });
+      input.addEventListener("keydown", event => {
+        if (event.key !== "Enter") return;
+        event.preventDefault();
+        commitQuantityInput(input);
+        input.blur();
+      });
     });
 
     dom.storageHotspots.forEach(button => {
