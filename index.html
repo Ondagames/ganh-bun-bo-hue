@@ -124,6 +124,50 @@
       pointer-events: none;
     }
 
+    #reset-confirm-modal {
+      position: absolute;
+      inset: 0;
+      z-index: 90;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(30, 22, 15, .58);
+    }
+
+    #reset-confirm-modal.show { display: flex; }
+
+    .reset-confirm-box {
+      width: min(360px, 90%);
+      padding: 20px 18px;
+      border: 3px solid #a96d29;
+      border-radius: 16px;
+      background: #fff8e8;
+      color: #573419;
+      font: 700 14px/1.4 "Baloo 2", sans-serif;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(62, 29, 7, .35);
+    }
+
+    .reset-confirm-box h2 { margin: 0 0 8px; font-size: 21px; }
+    .reset-confirm-box p { margin: 0 0 14px; }
+    .reset-confirm-actions { display: flex; gap: 8px; }
+    .reset-confirm-actions button {
+      flex: 1;
+      padding: 9px 6px;
+      border: 1px solid #377246;
+      border-radius: 8px;
+      background: #e3f0df;
+      color: #254b30;
+      font: inherit;
+      cursor: pointer;
+    }
+    .reset-confirm-actions .reset-confirm-danger {
+      border-color: #a64d2b;
+      background: #f8d9c8;
+      color: #71301c;
+    }
+
     /* Nút CÀI ĐẶT */
     #btn-settings {
       left: 7%;
@@ -515,27 +559,28 @@
     }
 
     #game-screen.storage-view .storage-qty {
-      display: none;
+      display: flex;
     }
 
-    .storage-qty[data-inventory="salt"] { left: 12.6%; top: 36.9%; }
-    .storage-qty[data-inventory="pepper"] { left: 26.4%; top: 36.9%; }
-    .storage-qty[data-inventory="sugar"] { left: 39.8%; top: 36.9%; }
-    .storage-qty[data-inventory="huePaste"] { left: 12.6%; top: 45.3%; }
-    .storage-qty[data-inventory="fishSauce"] { left: 26.4%; top: 45.3%; }
-    .storage-qty[data-inventory="sate"] { left: 39.8%; top: 45.3%; }
-    .storage-qty[data-inventory="rawVegetables"] { left: 12.6%; top: 57.4%; }
-    .storage-qty[data-inventory="lime"] { left: 26.4%; top: 57.4%; }
-    .storage-qty[data-inventory="chili"] { left: 39.8%; top: 57.4%; }
-    .storage-qty[data-inventory="riceNoodle"] { left: 27.4%; top: 69.1%; }
-    .storage-qty[data-inventory="freshBeef"] { left: 63.2%; top: 43.1%; }
-    .storage-qty[data-inventory="beefTendon"] { left: 83.8%; top: 43.1%; }
-    .storage-qty[data-inventory="brisket"] { left: 63.2%; top: 54.7%; }
-    .storage-qty[data-inventory="beefShank"] { left: 83.8%; top: 54.7%; }
-    .storage-qty[data-inventory="crabCake"] { left: 63.2%; top: 66.7%; }
-    .storage-qty[data-inventory="porkCake"] { left: 83.8%; top: 66.7%; }
-    .storage-qty[data-inventory="porkBlood"] { left: 63.2%; top: 78.5%; }
-    .storage-qty[data-inventory="porkHock"] { left: 83.8%; top: 78.5%; }
+    .storage-qty[data-inventory="salt"] { left: 7.4%; top: 29.0%; }
+    .storage-qty[data-inventory="pepper"] { left: 20.1%; top: 29.0%; }
+    .storage-qty[data-inventory="sugar"] { left: 32.8%; top: 29.0%; }
+    .storage-qty[data-inventory="huePaste"] { left: 7.4%; top: 35.9%; }
+    .storage-qty[data-inventory="fishSauce"] { left: 20.1%; top: 35.9%; }
+    .storage-qty[data-inventory="sate"] { left: 32.8%; top: 35.9%; }
+    .storage-qty[data-inventory="rawVegetables"] { left: 7.4%; top: 47.3%; }
+    .storage-qty[data-inventory="lime"] { left: 20.7%; top: 47.3%; }
+    .storage-qty[data-inventory="chili"] { left: 33.5%; top: 47.3%; }
+    .storage-qty[data-inventory="riceNoodle"] { left: 20.4%; top: 59.6%; }
+    .storage-qty[data-inventory="soyMilk"] { left: 7.4%; top: 69.7%; width: 15.0%; }
+    .storage-qty[data-inventory="freshBeef"] { left: 61.6%; top: 37.5%; }
+    .storage-qty[data-inventory="beefTendon"] { left: 82.4%; top: 37.5%; }
+    .storage-qty[data-inventory="brisket"] { left: 61.6%; top: 44.4%; }
+    .storage-qty[data-inventory="beefShank"] { left: 82.4%; top: 44.4%; }
+    .storage-qty[data-inventory="crabCake"] { left: 61.6%; top: 52.5%; }
+    .storage-qty[data-inventory="porkCake"] { left: 82.4%; top: 52.5%; }
+    .storage-qty[data-inventory="porkBlood"] { left: 61.6%; top: 60.6%; }
+    .storage-qty[data-inventory="porkHock"] { left: 82.4%; top: 60.6%; }
 
     .storage-hotspot {
       position: absolute;
@@ -1218,6 +1263,24 @@
       background: transparent;
       cursor: pointer;
       pointer-events: auto;
+    }
+
+    .daily-ingredient-hotspot::after {
+      content: attr(data-amount);
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      min-width: 18px;
+      padding: 2px 5px;
+      border: 1px solid rgba(117, 65, 23, .55);
+      border-radius: 999px;
+      background: rgba(255, 242, 198, .94);
+      color: #6d3517;
+      font: 800 clamp(9px, 2.3vw, 12px)/1 "Baloo 2", sans-serif;
+      text-align: center;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, .55);
+      box-shadow: 0 2px 4px rgba(77, 35, 9, .18);
+      pointer-events: none;
     }
 
     #game-screen.daily-game-view .daily-ingredient-hotspot {
@@ -2754,7 +2817,17 @@
 
     <!-- Title Screen -->
     <img id="title-bg" src="title-bg.png" alt="Gánh Bún Bò Huế" />
-    <span id="title-version" aria-label="Phiên bản 0.1">v0.1</span>
+    <span id="title-version" aria-label="Phiên bản 0.2">v0.2</span>
+    <div id="reset-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="reset-confirm-title" aria-describedby="reset-confirm-text">
+      <div class="reset-confirm-box">
+        <h2 id="reset-confirm-title">Reset game?</h2>
+        <p id="reset-confirm-text">Toàn bộ tiến trình, tiền, nguyên liệu và đánh giá sẽ được đưa về ngày đầu tiên.</p>
+        <div class="reset-confirm-actions">
+          <button type="button" id="reset-confirm-cancel">Hủy</button>
+          <button type="button" id="reset-confirm-accept" class="reset-confirm-danger">Reset game</button>
+        </div>
+      </div>
+    </div>
 
     <!-- Số ngày chơi (hiển thị trên nút Bắt Đầu) -->
     
@@ -3113,24 +3186,6 @@
       <button class="daily-ingredient-hotspot" data-daily-ingredient="soyMilk" aria-label="Thêm sữa đậu nành"></button>
       <button id="btn-daily-broth" class="daily-broth-hotspot" aria-label="Chan nước lèo vào tô"></button>
       <button id="btn-daily-bowl" class="daily-bowl-hotspot" aria-label="Lấy tô từ chồng tô"></button>
-      <span class="storage-qty" data-inventory="salt">0</span>
-      <span class="storage-qty" data-inventory="pepper">0</span>
-      <span class="storage-qty" data-inventory="sugar">0</span>
-      <span class="storage-qty" data-inventory="huePaste">0</span>
-      <span class="storage-qty" data-inventory="fishSauce">0</span>
-      <span class="storage-qty" data-inventory="sate">0</span>
-      <span class="storage-qty" data-inventory="rawVegetables">0</span>
-      <span class="storage-qty" data-inventory="lime">0</span>
-      <span class="storage-qty" data-inventory="chili">0</span>
-      <span class="storage-qty" data-inventory="riceNoodle">0</span>
-      <span class="storage-qty" data-inventory="freshBeef">0</span>
-      <span class="storage-qty" data-inventory="beefTendon">0</span>
-      <span class="storage-qty" data-inventory="brisket">0</span>
-      <span class="storage-qty" data-inventory="beefShank">0</span>
-      <span class="storage-qty" data-inventory="crabCake">0</span>
-      <span class="storage-qty" data-inventory="porkCake">0</span>
-      <span class="storage-qty" data-inventory="porkBlood">0</span>
-      <span class="storage-qty" data-inventory="porkHock">0</span>
       <button class="storage-hotspot" data-inventory="salt" aria-label="Xem số lượng muối"></button>
       <button class="storage-hotspot" data-inventory="pepper" aria-label="Xem số lượng tiêu"></button>
       <button class="storage-hotspot" data-inventory="sugar" aria-label="Xem số lượng bột ngọt"></button>
@@ -4880,6 +4935,25 @@
       }
     }
 
+    function resetGameProgress() {
+      stopDailyCustomerTimer();
+      document.getElementById("reset-confirm-modal").classList.remove("show");
+      document.querySelectorAll("dialog[open]").forEach(dialog => dialog.close());
+      gameState = normalizeGameState(createDefaultState().gameState);
+      settingsState = normalizeSettingsState(DEFAULT_SETTINGS_STATE);
+      uiState = { ...DEFAULT_UI_STATE };
+      gameView = "map";
+      meatCart = createEmptyMeatCart();
+      shopCarts = createEmptyShopCarts();
+      recipeBookOpenedAt = null;
+      dailyTimerLastTick = null;
+      brothMeterStartedAt = 0;
+      saveGame();
+      renderAll();
+      showTitleScreen();
+      showToast("Đã bắt đầu lại từ ngày 1 với 1.000đ", 1800);
+    }
+
     function spendMoney(amount, category) {
       if (amount <= 0 || gameState.money < amount) return false;
 
@@ -5349,7 +5423,9 @@
       dom.dailyIngredientHotspots.forEach(button => {
         const key = button.dataset.dailyIngredient;
         button.classList.toggle("added", selected.includes(key));
-        button.title = getInventoryMeta(key).name + ": còn " + formatInventoryAmount(getInventoryAmount(key)) + " phần";
+        const amount = formatInventoryAmount(getInventoryAmount(key));
+        button.dataset.amount = amount;
+        button.title = getInventoryMeta(key).name + ": còn " + amount + " phần";
       });
     }
 
@@ -7534,10 +7610,13 @@
     dom.settingsArt.addEventListener("click", closeTimeMenu);
 
     dom.btnExit.addEventListener("click", () => {
-      if (confirm("Bạn có chắc muốn thoát game không?")) {
-        alert("Cảm ơn bạn đã chơi Gánh Bún Bò Huế! 🍜\nHẹn gặp lại!");
-      }
+      document.getElementById("reset-confirm-modal").classList.add("show");
+      document.getElementById("reset-confirm-accept").focus();
     });
+    document.getElementById("reset-confirm-cancel").addEventListener("click", () => {
+      document.getElementById("reset-confirm-modal").classList.remove("show");
+    });
+    document.getElementById("reset-confirm-accept").addEventListener("click", resetGameProgress);
 
     // Chặn zoom trên mobile
     document.addEventListener("gesturestart", e => e.preventDefault());
