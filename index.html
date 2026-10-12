@@ -2855,7 +2855,7 @@
 
     <!-- Title Screen -->
     <img id="title-bg" src="title-bg.png" alt="Gánh Bún Bò Huế" />
-    <span id="title-version" aria-label="Phiên bản 0.3">v0.3</span>
+    <span id="title-version" aria-label="Phiên bản 0.4">v0.4</span>
     <div id="reset-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="reset-confirm-title" aria-describedby="reset-confirm-text">
       <div class="reset-confirm-box">
         <h2 id="reset-confirm-title">Reset game?</h2>
@@ -2880,7 +2880,7 @@
     <!-- ===== MODAL CÀI ĐẶT: đồ họa PNG + vùng tương tác ===== -->
     <div id="settings-modal">
       <div class="settings-art" id="settings-art">
-        <img src="settings-bg.png" alt="Cài đặt" />
+        <img src="settings-bg.png" alt="Cài đặt" loading="lazy" />
         <button id="btn-guide" class="hotspot" aria-label="Hướng dẫn cách chơi"></button>
         <button id="business-hours-btn" class="hotspot" aria-label="Đổi thời gian kinh doanh"></button>
         <div id="time-value">2 phút</div>
@@ -2914,21 +2914,21 @@
 
     <!-- Màn hình Game tạm -->
     <div id="game-screen" class="map-view">
-      <img id="game-map-bg" class="game-bg" src="game-map-bg.png" alt="Bản đồ Gánh Bún Bò Huế" />
+      <img id="game-map-bg" class="game-bg" src="game-map-bg.png" alt="Bản đồ Gánh Bún Bò Huế" loading="lazy" />
       <button id="btn-map-calendar" type="button" aria-label="Xem ngày chơi hiện tại">
         <span id="map-calendar-day">1</span>
       </button>
-      <img id="market-bg" class="game-bg" src="market-bg.png" alt="Chợ Đông Ba" />
-      <img id="meat-bg" class="game-bg" src="meat-bg.png" alt="Hàng Thịt" />
-      <img id="noodle-bg" class="game-bg" src="noodle-bg.png" alt="Hàng Bún" />
-      <img id="spice-bg" class="game-bg" src="spice-bg.png" alt="Hàng Gia Vị" />
-      <img id="vegetable-bg" class="game-bg" src="vegetable-bg.png" alt="Hàng Rau" />
-      <img id="kitchen-bg" class="game-bg" src="kitchen-bg.png" alt="Khu vực Bếp" />
-      <img id="storage-bg" class="game-bg" src="storage-bg.png" alt="Kho Nguyên Liệu" />
-      <img id="upgrade-bg" class="game-bg" src="upgrade-bg.png" alt="Nâng Cấp Cửa Hàng" />
-      <img id="review-bg" class="game-bg" src="review-bg.png" alt="Đánh giá khách hàng" />
-      <img id="medal-bg" class="game-bg" src="medal-bg.png" alt="Huy chương lao động" />
-      <img id="mystery-shop-bg" class="game-bg" src="mystery-shop-bg.png" alt="Cửa hàng bí ẩn" />
+      <img id="market-bg" class="game-bg" src="market-bg.png" alt="Chợ Đông Ba" loading="lazy" />
+      <img id="meat-bg" class="game-bg" src="meat-bg.png" alt="Hàng Thịt" loading="lazy" />
+      <img id="noodle-bg" class="game-bg" src="noodle-bg.png" alt="Hàng Bún" loading="lazy" />
+      <img id="spice-bg" class="game-bg" src="spice-bg.png" alt="Hàng Gia Vị" loading="lazy" />
+      <img id="vegetable-bg" class="game-bg" src="vegetable-bg.png" alt="Hàng Rau" loading="lazy" />
+      <img id="kitchen-bg" class="game-bg" src="kitchen-bg.png" alt="Khu vực Bếp" loading="lazy" />
+      <img id="storage-bg" class="game-bg" src="storage-bg.png" alt="Kho Nguyên Liệu" loading="lazy" />
+      <img id="upgrade-bg" class="game-bg" src="upgrade-bg.png" alt="Nâng Cấp Cửa Hàng" loading="lazy" />
+      <img id="review-bg" class="game-bg" src="review-bg.png" alt="Đánh giá khách hàng" loading="lazy" />
+      <img id="medal-bg" class="game-bg" src="medal-bg.png" alt="Huy chương lao động" loading="lazy" />
+      <img id="mystery-shop-bg" class="game-bg" src="mystery-shop-bg.png" alt="Cửa hàng bí ẩn" loading="lazy" />
       <section class="mystery-products" aria-label="Mua hộp bí ẩn">
         <div class="mystery-product">
           <img src="mystery-box-1.png" alt="Hộp bí ẩn 1">
@@ -3058,8 +3058,8 @@
         <p id="service-medal-status" role="status"></p>
         <button type="button" id="medal-details-close">Đóng</button>
       </dialog>
-      <img id="open-store-bg" class="game-bg" src="open-store-bg.png" alt="Mở cửa hàng" />
-      <img id="daily-game-bg" class="game-bg" src="daily-game-bg-final.png" alt="Bắt đầu ngày mới" />
+      <img id="open-store-bg" class="game-bg" src="open-store-bg.png" alt="Mở cửa hàng" loading="lazy" />
+      <img id="daily-game-bg" class="game-bg" src="daily-game-bg-final.png" alt="Bắt đầu ngày mới" loading="lazy" />
       <img id="review-back-art" class="review-back-art" src="review-back.png" alt="" aria-hidden="true" />
       <img id="medal-back-art" class="medal-back-art" src="review-back.png" alt="" aria-hidden="true" />
       <img id="open-store-next-art" class="open-store-next-art" src="open-store-next.png" alt="" aria-hidden="true" />
@@ -4995,6 +4995,13 @@
       document.getElementById("reset-confirm-modal").classList.remove("show");
       document.querySelectorAll("dialog[open]").forEach(dialog => dialog.close());
       gameState = normalizeGameState(createDefaultState().gameState);
+      // Clear every transient and persisted ingredient state from the old run.
+      gameState.inventory = normalizeInventory({}, 1);
+      gameState.dailyCustomers = [];
+      gameState.dailyBowlItems = [];
+      gameState.cookingPot = [];
+      gameState.cookingResult = null;
+      gameState.brothPreparedForDay = 0;
       settingsState = normalizeSettingsState(DEFAULT_SETTINGS_STATE);
       uiState = { ...DEFAULT_UI_STATE };
       gameView = "map";
@@ -5162,7 +5169,9 @@ function renderStorageInventory() {
     function createMusicTrack(src) {
       const track = new Audio(src);
       track.loop = true;
-      track.preload = "metadata";
+      // Avoid requesting the large audio files while the title screen is
+      // starting. Playback will load the track after the user interacts.
+      track.preload = "none";
       let fallbackAttempted = false;
       track.addEventListener("error", async () => {
         if (fallbackAttempted) return;
@@ -5180,7 +5189,7 @@ function renderStorageInventory() {
       return track;
     }
 
-    const mainMusic = createMusicTrack("hue-sunrise-kitchen.wav");
+    const mainMusic = createMusicTrack("hue-sunrise-kitchen.mp3");
     const gameplayMusic = createMusicTrack("gameplay-street-food-stall.wav");
 
     function syncMainMusic() {
@@ -6889,18 +6898,37 @@ function renderStorageInventory() {
     function preloadImage(src) {
       return new Promise(resolve => {
         const img = new Image();
+        // Do not decode every large PNG before the title screen appears. The
+        // browser can decode each image when it is first displayed, while the
+        // remaining assets continue loading in the background.
         img.onload = () => resolve({ src, ok: true });
         img.onerror = () => resolve({ src, ok: false });
         img.src = src;
       });
     }
 
-    function hideLoading() {
-      setTimeout(() => dom.loading.classList.add("hidden"), 350);
+    function hideLoading(delay = 80) {
+      setTimeout(() => dom.loading.classList.add("hidden"), delay);
     }
 
     function preloadAssets() {
-      Promise.all(ASSETS.map(preloadImage)).then(hideLoading);
+      const dynamicAssets = [
+        ...CUSTOMER_AVATARS.map(avatar => avatar.src),
+        ...Object.values(DAILY_BOWL_ORDER_ASSETS).map(asset => asset.src),
+        ...Object.values(DAILY_SIDE_ITEM_ASSETS).map(asset => asset.src)
+      ];
+      const imageSources = [...new Set([...ASSETS, ...dynamicAssets])];
+      // The title screen should not wait for the complete art library. Show
+      // the interface quickly, then warm all gameplay assets in the cache.
+      hideLoading();
+      const warmRemainingAssets = () => {
+        Promise.all(imageSources.map(preloadImage)).catch(() => {});
+      };
+      if (typeof window.requestIdleCallback === "function") {
+        window.requestIdleCallback(warmRemainingAssets, { timeout: 1200 });
+      } else {
+        setTimeout(warmRemainingAssets, 0);
+      }
     }
 
     // ========== Settings handlers ==========
