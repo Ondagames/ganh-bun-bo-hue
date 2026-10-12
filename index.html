@@ -1948,7 +1948,7 @@
       background: #fff;
       box-shadow: 0 0 0 2px #6b2f10, 0 0 12px rgba(255,255,255,.95);
       transform: translateX(-50%);
-      animation: broth-sweep .5s linear infinite alternate;
+      animation: broth-sweep .55s linear infinite alternate;
     }
 
     #broth-game.resolved .broth-pointer {
@@ -2791,11 +2791,12 @@
       <div class="guide-box">
         <h2>📖 Hướng dẫn chơi</h2>
         <ol>
-          <li><strong>Bước 1</strong>: Đi chợ mua nguyên liệu.</li>
-          <li><strong>Bước 2</strong>: Các nguyên liệu sẽ được đưa vào kho, sau đó bắt đầu vào bếp để nấu.</li>
-          <li><strong>Bước 3</strong>: Sau khi nấu, vào phần cửa hàng, chỉnh giá bán và bắt đầu cho một ngày mới.</li>
+          <li><strong>Bước 1</strong>: Đi chợ chuẩn bị các nguyên liệu để nấu và kinh doanh trong ngày. Tại hàng gia vị chỉ cần mua mỗi nguyên liệu một lần là đủ nấu cho nồi nước lèo thơm ngon. Các nguyên liệu sẽ được phục vụ cho 1 phần bún.</li>
+          <li><strong>Bước 2</strong>: Sau khi đã hoàn thành đi chợ sẽ di chuyển đến gian bếp để nấu nồi nước lèo. Để nấu được nồi nước lèo chuẩn bị trước tiên phải chọn đủ tất cả các nguyên liệu trên khay vào nồi. Mỗi khay chỉ cần chọn một lần là đủ. Khi chọn đủ tất cả các nguyên liệu thanh canh gia vị sẽ hiện lên. Chỉ cần canh đúng hương vị chuẩn sẽ thu hút nhiều thực khách hơn.</li>
+          <li><strong>Bước 3</strong>: Khi đã hoàn thành việc nấu nồi nước lèo sẽ di chuyển đến phần mở cửa hàng. Cách thức mở cửa hàng: vào <strong>Cửa hàng → Mở cửa hàng</strong>. Trước khi mở cửa hàng, người chơi thiết lập giá của từng nguyên liệu để bắt đầu cho ngày kinh doanh mới.</li>
+          <li><strong>Bước 4</strong>: Khi vào kinh doanh, ở phía tủ quầy sẽ có một quyển sách hướng dẫn màu xanh nhỏ. Khi chọn xem hướng dẫn, thời gian chờ của khách và thời gian kinh doanh của ngày sẽ ngưng đọng lại.</li>
         </ol>
-        <p><strong>Lưu ý:</strong> Công thức sẽ nằm ở dưới tủ.</p>
+        <p><strong>Lưu ý:</strong> Tại phần cửa hàng sẽ có phần nâng cấp cửa hàng. Khi chọn vào hình ảnh nâng cấp sẽ hiển thị giá và nội dung được nâng cấp. Tại mục huy chương lao động, khi người chơi hoàn thành các nhiệm vụ thì các huy chương sẽ lần lượt xuất hiện. Tại phần huy chương lao động sẽ có phần bí mật, đó là hộp quà Secret. Các hộp quà sẽ có các giá khác nhau và các vật phẩm sẽ hiển thị tùy theo sự may mắn của người chơi.</p>
         <button class="modal-btn btn-close" id="btn-close-guide" style="margin-top:16px;">Đã hiểu!</button>
       </div>
     </div>
@@ -3368,7 +3369,7 @@
       "ava y ta nam.png",
       "ava y ta nu.png"
     ];
-    const STARTING_MONEY = 500;
+    const STARTING_MONEY = 1000;
     const MEAT_ITEMS = {
       freshBeef: { name: "Thịt bò tươi", price: 2, unit: "phần", servingsPerUnit: 1 },
       beefTendon: { name: "Thịt bò gân", price: 2, unit: "phần", servingsPerUnit: 1 },
@@ -3972,7 +3973,7 @@
     let lastShopPointer = { key: "", at: 0 };
     let lastBrothPointerAt = 0;
     let brothMeterStartedAt = 0;
-    const BROTH_SWEEP_MS = 500;
+    const BROTH_SWEEP_MS = 550;
 
     // ========== Storage ==========
     function normalizeNumber(value, fallback) {
