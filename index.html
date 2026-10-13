@@ -2855,7 +2855,7 @@
 
     <!-- Title Screen -->
     <img id="title-bg" src="title-bg.png" alt="Gánh Bún Bò Huế" />
-    <span id="title-version" aria-label="Phiên bản 0.4">v0.4</span>
+    <span id="title-version" aria-label="Phiên bản 0.5">v0.5</span>
     <div id="reset-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="reset-confirm-title" aria-describedby="reset-confirm-text">
       <div class="reset-confirm-box">
         <h2 id="reset-confirm-title">Reset game?</h2>
@@ -4550,17 +4550,16 @@
 
     function getDailyCustomerGrowth() {
       const reviews = gameState.customerReviews;
-      if (!reviews.length) return 0;
+      if (!reviews.length) return 1 + Math.floor(Math.random() * 5);
       const rating = reviews.reduce((sum, review) => sum + review.stars, 0) / reviews.length;
-      if (rating >= 4) return rating >= 4.5 ? 3 : 2;
-      return rating <= 2.5 ? -3 : -2;
+      if (rating < 3) return -(2 + Math.floor(Math.random() * 2));
+      return 1 + Math.floor(Math.random() * 5);
     }
 
     function getCustomerBaseForDay(day) {
       const saved = gameState.customerBase;
-      const baseDay = saved?.day || gameState.day;
-      const count = saved?.count || 6;
-      return count + Math.max(0, day - baseDay) * getDailyCustomerGrowth();
+      if (saved && saved.day === day) return Math.max(1, saved.count);
+      return Math.max(1, saved?.count || 6);
     }
 
     function getDayCustomerCount(day, type = "normal") {
@@ -4615,7 +4614,9 @@
           && index >= customerCount - lotusCount - 2 && index < customerCount - lotusCount;
         if (hueTripGuest) avatar = CUSTOMER_AVATARS.find(item => item.name === "Khách du lịch") || avatar;
         const order = createRandomDailyOrder();
-        const bowlCount = hueTripGuest ? 5 : Math.random() < .45 ? 2 + Math.floor(Math.random() * 2) : 1;
+        // Regular customers randomly order 1–3 bowls. The tourist event keeps
+        // its special five-bowl challenge when that upgrade is active.
+        const bowlCount = hueTripGuest ? 5 : 1 + Math.floor(Math.random() * 3);
         const orders = [order];
         const otherMenus = pickRandomItems(DAILY_MENU_ITEMS.filter(item => item.name !== order.orderName), bowlCount - 1);
         otherMenus.forEach(menu => {
@@ -5046,7 +5047,13 @@
 
     function finishDay(earnings = 0) {
       if (!gameState.firstDayPending) expireInventoryAtDayEnd();
-      gameState.customerBase = { day: getNextBusinessDay(), count: getCustomerBaseForDay(getNextBusinessDay()) };
+      const nextDay = getNextBusinessDay();
+      const currentCustomerBase = getCustomerBaseForDay(gameState.day);
+      const growth = gameState.firstDayPending ? 0 : getDailyCustomerGrowth();
+      gameState.customerBase = {
+        day: nextDay,
+        count: Math.max(1, currentCustomerBase + growth)
+      };
       gameState.dailyDebtRepaid = gameState.customerDebt;
       gameState.money += gameState.customerDebt;
       gameState.customerDebt = 0;
@@ -6080,7 +6087,10 @@ function renderStorageInventory() {
       if (gameView !== "dailyGame" || uiState.scene !== SCENES.GAME || gameState.dailyEvent || recipeBookOpenedAt !== null) return;
       const customers = gameState.dailyCustomers;
       const exhausted = customers.length > 0 && customers.every(customer => customer.status !== "waiting");
-      if (!forceClose && !gameState.dailyClosed && !exhausted && gameState.dailyElapsedSeconds < getBusinessDuration()) return;
+      // Do not show the revenue summary while a customer is still waiting.
+      // The business clock may finish first, but the remaining customers
+      // still need to be served or leave before the day can be summarized.
+      if (!forceClose && !gameState.dailyClosed && !exhausted) return;
       gameState.dailyClosed = true;
       awardMysteryKey();
       expireInventoryAtDayEnd();
