@@ -570,28 +570,71 @@
     .storage-hotspot::after {
       content: attr(data-amount);
       position: absolute;
-      top: 3px;
-      right: 3px;
-      min-width: 16px;
-      padding: 2px 4px;
+      top: 4px;
+      right: 4px;
+      min-width: 17px;
+      height: 14px;
+      padding: 0 2px;
       border: 1px solid rgba(117, 65, 23, .55);
-      border-radius: 999px;
+      border-radius: 3px;
       background: rgba(255, 242, 198, .94);
       color: #6d3517;
-      font: 800 clamp(8px, 2.1vw, 11px)/1 "Baloo 2", sans-serif;
+      font: 800 clamp(7px, 1.7vw, 10px)/13px "Baloo 2", sans-serif;
       text-align: center;
       text-shadow: 0 1px 0 rgba(255, 255, 255, .55);
       box-shadow: 0 2px 4px rgba(77, 35, 9, .18);
       pointer-events: none;
     }
 
-    /* Fine-tune count badges to stay centered on the ingredient artwork. */
-    .storage-hotspot[data-inventory="chili"]::after { right: 8px; }
     .storage-hotspot[data-inventory="freshBeef"]::after,
-    .storage-hotspot[data-inventory="beefTendon"]::after { top: 16px; }
+    .storage-hotspot[data-inventory="beefTendon"]::after {
+      top: 18px;
+      right: 8px;
+    }
+
+    .storage-hotspot[data-inventory="crabCake"]::after,
+    .storage-hotspot[data-inventory="porkCake"]::after {
+      top: -4px;
+    }
+
     .storage-hotspot[data-inventory="porkBlood"]::after,
-    .storage-hotspot[data-inventory="porkHock"]::after { top: -14px; }
-    .storage-hotspot[data-inventory="soyMilk"]::after { top: -14px; right: 1px; }
+    .storage-hotspot[data-inventory="porkHock"]::after {
+      top: -22px;
+    }
+
+    .storage-hotspot[data-inventory="huePaste"]::after,
+    .storage-hotspot[data-inventory="fishSauce"]::after,
+    .storage-hotspot[data-inventory="sate"]::after {
+      top: -4px;
+    }
+
+    .storage-hotspot[data-inventory="sate"]::after {
+      right: 10px;
+    }
+
+    .storage-hotspot[data-inventory="rawVegetables"]::after,
+    .storage-hotspot[data-inventory="lime"]::after,
+    .storage-hotspot[data-inventory="chili"]::after {
+      top: -4px;
+    }
+
+    .storage-hotspot[data-inventory="chili"]::after {
+      right: 16px;
+    }
+
+    .storage-hotspot[data-inventory="sugar"]::after {
+      right: 10px;
+    }
+
+    .storage-hotspot[data-inventory="riceNoodle"]::after {
+      top: -4px;
+      right: 4px;
+    }
+
+    .storage-hotspot[data-inventory="soyMilk"]::after {
+      top: -46px;
+      right: -8px;
+    }
 
     #game-screen.storage-view .storage-hotspot {
       display: block;
