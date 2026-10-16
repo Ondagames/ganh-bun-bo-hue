@@ -3507,6 +3507,7 @@
       "ava y ta nu.png"
     ];
     const STARTING_MONEY = 1000;
+    const BASE_STORAGE_PRESERVATION_DAYS = 2;
     const MEAT_ITEMS = {
       freshBeef: { name: "Thịt bò tươi", price: 2, unit: "phần", servingsPerUnit: 1 },
       beefTendon: { name: "Thịt bò gân", price: 2, unit: "phần", servingsPerUnit: 1 },
@@ -3643,7 +3644,7 @@
       brothPreparedForDay: 0,
       dailyBowlItems: [],
       upgrades: {},
-      storagePreservationDays: 1,
+      storagePreservationDays: BASE_STORAGE_PRESERVATION_DAYS,
       dailySpoilage: "",
       customerWaitBonusSeconds: 0,
       signCustomerBonusPercent: 0,
@@ -4833,7 +4834,7 @@
           normalizeCookingResult(value.cookingResult) ? normalizeNumber(value.day, 1) + 1 : 0))),
         dailyBowlItems: normalizeDailyBowlItems(value.dailyBowlItems),
         upgrades,
-        storagePreservationDays: 1 + upgrades.fridge,
+        storagePreservationDays: BASE_STORAGE_PRESERVATION_DAYS + upgrades.fridge,
         dailySpoilage: typeof value.dailySpoilage === "string" ? value.dailySpoilage : "",
         customerWaitBonusSeconds: getCapacityWaitBonusSeconds(upgrades.capacity),
         signCustomerBonusPercent: getSignCustomerBonusPercent(upgrades.sign),
@@ -4943,7 +4944,7 @@
     }
 
     function getPreservationDays() {
-      return gameState.lotusCodeOwned ? Infinity : 1 + normalizeUpgrades(gameState.upgrades).fridge;
+      return gameState.lotusCodeOwned ? Infinity : BASE_STORAGE_PRESERVATION_DAYS + normalizeUpgrades(gameState.upgrades).fridge;
     }
 
     function addInventoryBatch(key, amount) {
@@ -6756,27 +6757,27 @@ function renderStorageInventory() {
       if (action === "fridge") {
         const currentLevel = Math.max(0, Math.min(3, normalizeNumber(gameState.upgrades.fridge, 0)));
         if (currentLevel >= 3) {
-          gameState.storagePreservationDays = 4;
+          gameState.storagePreservationDays = BASE_STORAGE_PRESERVATION_DAYS + 3;
           saveGame();
           renderAll();
-          showGameToast("Tủ lạnh đã đạt cấp tối đa 3/3: bảo quản 4 ngày", 1700);
+          showGameToast("Tủ lạnh đã đạt cấp tối đa 3/3: bảo quản " + gameState.storagePreservationDays + " ngày", 1700);
           return;
         }
 
         const nextLevel = currentLevel + 1;
         const price = FRIDGE_UPGRADE_PRICES[currentLevel];
         if (gameState.money < price) {
-          showGameToast("Tủ lạnh cấp " + nextLevel + "/3: " + formatMoney(price) + "đ - bảo quản " + (nextLevel + 1) + " ngày", 1800);
+          showGameToast("Tủ lạnh cấp " + nextLevel + "/3: " + formatMoney(price) + "đ - bảo quản " + (BASE_STORAGE_PRESERVATION_DAYS + nextLevel) + " ngày", 1800);
           return;
         }
 
         if (!spendMoney(price, "upgrades")) return;
 
         gameState.upgrades.fridge = nextLevel;
-        gameState.storagePreservationDays = nextLevel + 1;
+        gameState.storagePreservationDays = BASE_STORAGE_PRESERVATION_DAYS + nextLevel;
         saveGame();
         renderAll();
-        showGameToast("Đã nâng tủ lạnh cấp " + nextLevel + "/3: bảo quản " + (nextLevel + 1) + " ngày", 1700);
+        showGameToast("Đã nâng tủ lạnh cấp " + nextLevel + "/3: bảo quản " + gameState.storagePreservationDays + " ngày", 1700);
         return;
       }
 
